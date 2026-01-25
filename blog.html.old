@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CS97 - Blog</title>
+        <!-- --
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+            rel="stylesheet" -->
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Poppins", sans-serif;
+            }
+
+            body {
+                background: #081b29;
+                color: #ededed;
+                min-height: 100vh;
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 20px 10%;
+                background: rgba(8, 27, 41, 0.95);
+                backdrop-filter: blur(10px);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 100;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .logo {
+                font-size: 25px;
+                color: #ededed;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .navbar a {
+                font-size: 18px;
+                color: #ededed;
+                text-decoration: none;
+                font-weight: 500;
+                margin-left: 35px;
+                transition: 0.3s;
+            }
+
+            .navbar a:hover,
+            .navbar a.active {
+                color: #00abf0;
+            }
+
+            .blog-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 120px 5% 60px;
+            }
+
+            .blog-header {
+                text-align: center;
+                margin-bottom: 60px;
+            }
+
+            .blog-header h1 {
+                font-size: 56px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                background: linear-gradient(90deg, #00abf0, #00d4ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .blog-header p {
+                font-size: 18px;
+                color: #9ca3af;
+            }
+
+            .blog-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 30px;
+                margin-bottom: 40px;
+            }
+
+            .blog-card {
+                background: rgba(255, 255, 255, 0.05);
+                border: 2px solid rgba(0, 171, 240, 0.2);
+                border-radius: 12px;
+                padding: 30px;
+                transition: all 0.3s ease;
+                cursor: pointer;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .blog-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 100%;
+                background: rgba(0, 171, 240, 0.1);
+                transition: 0.5s;
+                z-index: 0;
+            }
+
+            .blog-card:hover::before {
+                width: 100%;
+            }
+
+            .blog-card:hover {
+                border-color: #00abf0;
+                transform: translateY(-5px);
+                box-shadow: 0 10px 30px rgba(0, 171, 240, 0.3);
+            }
+
+            .blog-card-content {
+                position: relative;
+                z-index: 1;
+            }
+
+            .blog-date {
+                color: #00abf0;
+                font-size: 14px;
+                font-weight: 500;
+                margin-bottom: 10px;
+                display: block;
+            }
+
+            .blog-card h2 {
+                font-size: 24px;
+                font-weight: 700;
+                margin-bottom: 15px;
+                color: #ededed;
+            }
+
+            .blog-card p {
+                font-size: 16px;
+                line-height: 1.6;
+                color: #b0b0b0;
+                margin-bottom: 20px;
+            }
+
+            .blog-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+
+            .tag {
+                background: rgba(0, 171, 240, 0.2);
+                color: #00abf0;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .read-more {
+                color: #00abf0;
+                font-weight: 600;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                transition: 0.3s;
+            }
+
+            .read-more:hover {
+                gap: 8px;
+            }
+
+            .read-more::after {
+                content: "→";
+                margin-left: 5px;
+                transition: 0.3s;
+            }
+
+            @media (max-width: 768px) {
+                .blog-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .blog-header h1 {
+                    font-size: 36px;
+                }
+
+                .navbar a {
+                    margin-left: 20px;
+                    font-size: 16px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="header">
+            <a href="https://chrswr.de/" class="logo">chrswr</a>
+            <nav class="navbar">
+                <a href="https://chrswr.de/">Home</a>
+                <a href="#" class="active">Blog</a>
+                <a href="QuackQuack3.webm">Quack</a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    >Contact</a
+                >
+            </nav>
+        </header>
+
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>Blog</h1>
+                <p>
+                    Thoughts on programming, operating systems, and other stuff
+                </p>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-card-content">
+                        <span class="blog-date">03. November 2025</span>
+                        <h2>Why I Love Rust</h2>
+                        <div class="blog-tags">
+                            <span class="tag">Rust</span>
+                            <span class="tag">Programming</span>
+                        </div>
+                        <p>
+                            Rust has become my go-to language for systems
+                            programming. The borrow checker might seem strict at
+                            first, but it prevents so many bugs at compile
+                            time...
+                        </p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-content">
+                        <span class="blog-date">28. Oktober 2025</span>
+                        <h2>Gentoo Setup Guide</h2>
+                        <div class="blog-tags">
+                            <span class="tag">Linux</span>
+                            <span class="tag">Gentoo</span>
+                            <span class="tag">Tutorial</span>
+                        </div>
+                        <p>
+                            My personal guide to setting up Gentoo from scratch.
+                            Why compile everything yourself? Because you can,
+                            and because it's actually worth it...
+                        </p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-content">
+                        <span class="blog-date">15. Oktober 2025</span>
+                        <h2>KISS Principle in Practice</h2>
+                        <div class="blog-tags">
+                            <span class="tag">Philosophy</span>
+                            <span class="tag">Design</span>
+                        </div>
+                        <p>
+                            Keep It Simple, Stupid. This principle has shaped
+                            how I approach software development and system
+                            administration. Here's why simplicity matters...
+                        </p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-content">
+                        <span class="blog-date">02. Oktober 2025</span>
+                        <h2>Bash Scripting Tips</h2>
+                        <div class="blog-tags">
+                            <span class="tag">Bash</span>
+                            <span class="tag">Scripting</span>
+                        </div>
+                        <p>
+                            Some useful bash scripting patterns I use regularly.
+                            From error handling to portable code, these tricks
+                            have saved me countless hours...
+                        </p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-content">
+                        <span class="blog-date">20. September 2025</span>
+                        <h2>Alpine Linux for Containers</h2>
+                        <div class="blog-tags">
+                            <span class="tag">Alpine</span>
+                            <span class="tag">Docker</span>
+                        </div>
+                        <p>
+                            Why Alpine Linux is perfect for containerized
+                            applications. Small size, security-focused, and musl
+                            libc make it ideal for modern cloud deployments...
+                        </p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <div class="blog-card-content">
+                        <span class="blog-date">08. September 2025</span>
+                        <h2>Stock Trading Insights</h2>
+                        <div class="blog-tags">
+                            <span class="tag">Finance</span>
+                            <span class="tag">Trading</span>
+                        </div>
+                        <p>
+                            Sometimes I do other stuff like stock trading. Here
+                            are some lessons learned from tracking markets and
+                            making data-driven decisions...
+                        </p>
+                        <a href="#" class="read-more">Read more</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Rust Actix qd - chrswr Blog</title>
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M2.5 17.5L7.5 7.5L12 1.5L16.5 7.5L21.5 17.5H2.5Z' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M9 13L10.5 11L13 13H9Z' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M5 18C7.5 19 16.5 19 19 18' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+            type="image/svg+xml"
+        />
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Poppins", sans-serif;
+            }
+
+            body {
+                background: url("berg.avif") no-repeat;
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                color: #ededed;
+                min-height: 100vh;
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(8, 27, 41, 0.85);
+                z-index: -1;
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 20px 10%;
+                background: rgba(8, 27, 41, 0.95);
+                backdrop-filter: blur(10px);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 100;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .logo {
+                font-size: 25px;
+                color: #ededed;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .navbar a {
+                font-size: 18px;
+                color: #ededed;
+                text-decoration: none;
+                font-weight: 500;
+                margin-left: 35px;
+                transition: 0.3s;
+            }
+
+            .navbar a:hover,
+            .navbar a.active {
+                color: #00abf0;
+            }
+
+            .article-container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 120px 5% 60px;
+            }
+
+            .article-header {
+                margin-bottom: 40px;
+                padding-bottom: 30px;
+                border-bottom: 2px solid rgba(0, 171, 240, 0.2);
+            }
+
+            .article-date {
+                color: #00abf0;
+                font-size: 14px;
+                font-weight: 500;
+                margin-bottom: 15px;
+                display: block;
+            }
+
+            .article-header h1 {
+                font-size: 48px;
+                font-weight: 700;
+                margin-bottom: 20px;
+                background: linear-gradient(90deg, #00abf0, #00d4ff);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .article-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .tag {
+                background: rgba(0, 171, 240, 0.2);
+                color: #00abf0;
+                padding: 5px 12px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 500;
+            }
+
+            .article-content {
+                line-height: 1.8;
+                font-size: 18px;
+            }
+
+            .article-content h2 {
+                font-size: 32px;
+                font-weight: 700;
+                margin-top: 40px;
+                margin-bottom: 20px;
+                color: #00abf0;
+            }
+
+            .article-content h3 {
+                font-size: 24px;
+                font-weight: 600;
+                margin-top: 30px;
+                margin-bottom: 15px;
+                color: #00d4ff;
+            }
+
+            .article-content p {
+                margin-bottom: 20px;
+                color: #d1d5db;
+            }
+
+            .article-content ul,
+            .article-content ol {
+                margin-bottom: 20px;
+                margin-left: 30px;
+                color: #d1d5db;
+            }
+
+            .article-content li {
+                margin-bottom: 10px;
+            }
+
+            .code-block {
+                background: rgba(0, 0, 0, 0.4);
+                border: 1px solid rgba(0, 171, 240, 0.3);
+                border-radius: 8px;
+                padding: 20px;
+                margin: 25px 0;
+                overflow-x: auto;
+                position: relative;
+            }
+
+            .code-block::before {
+                content: attr(data-lang);
+                position: absolute;
+                top: 8px;
+                right: 12px;
+                font-size: 12px;
+                color: #00abf0;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .code-block pre {
+                margin: 0;
+                color: #e5e7eb;
+                font-family: "Courier New", monospace;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+
+            .inline-code {
+                background: rgba(0, 171, 240, 0.15);
+                color: #00d4ff;
+                padding: 2px 6px;
+                border-radius: 4px;
+                font-family: "Courier New", monospace;
+                font-size: 16px;
+            }
+
+            .info-box {
+                background: rgba(0, 171, 240, 0.1);
+                border-left: 4px solid #00abf0;
+                padding: 20px;
+                margin: 30px 0;
+                border-radius: 4px;
+            }
+
+            .info-box p {
+                margin-bottom: 0;
+            }
+
+            .back-link {
+                display: inline-flex;
+                align-items: center;
+                color: #00abf0;
+                text-decoration: none;
+                font-weight: 600;
+                margin-top: 50px;
+                transition: 0.3s;
+            }
+
+            .back-link:hover {
+                gap: 8px;
+            }
+
+            .back-link::before {
+                content: "←";
+                margin-right: 5px;
+                transition: 0.3s;
+            }
+
+            @media (max-width: 768px) {
+                .article-header h1 {
+                    font-size: 32px;
+                }
+
+                .article-content {
+                    font-size: 16px;
+                }
+
+                .article-content h2 {
+                    font-size: 24px;
+                }
+
+                .navbar a {
+                    margin-left: 20px;
+                    font-size: 16px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="header">
+            <a href="https://chrswr.de/" class="logo">chrswr</a>
+            <nav class="navbar">
+                <a href="https://chrswr.de/">Home</a>
+                <a href="blog.html" class="active">Blog</a>
+                <a href="QuackQuack3.webm">Quack</a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    >Contact</a
+                >
+            </nav>
+        </header>
+
+        <div class="article-container">
+            <article>
+                <div class="article-header">
+                    <span class="article-date">November 5, 2025</span>
+                    <h1>Rust Actix qd</h1>
+                    <div class="article-tags">
+                        <span class="tag">Rust</span>
+                        <span class="tag">Actix</span>
+                        <span class="tag">Web</span>
+                    </div>
+                </div>
+
+                <div class="article-content">
+                    <p>
+                        Actix-web is one of the fastest web server frameworks
+                        for Rust and perfect for high-performance web
+                        applications. In this quick guide, I'll show you how to
+                        set up a working Actix web server in just a few minutes.
+                    </p>
+
+                    <h2>Why Actix?</h2>
+
+                    <ul>
+                        <li>
+                            Blazing fast – consistently tops web framework
+                            benchmarks (yes, faster than your Go microservice)
+                        </li>
+                        <li>
+                            Type-safe through Rust's type system – the compiler
+                            is your best friend and worst enemy
+                        </li>
+                        <li>
+                            Async/await support out of the box – because
+                            callback hell is so 2015
+                        </li>
+                        <li>
+                            Middleware system for reusable components – DRY
+                            principle on steroids
+                        </li>
+                        <li>
+                            Built-in WebSocket support – real-time features
+                            without the headache
+                        </li>
+                    </ul>
+
+                    <h2>Setup</h2>
+                    <p>
+                        First, let's create a new Rust project and add Actix-web
+                        as a dependency:
+                    </p>
+
+                    <div class="code-block" data-lang="bash">
+                        <pre>
+cargo new actix-demo
+cd actix-demo</pre
+                        >
+                    </div>
+                    <!-- Hello World -->
+                    <h2>Hello World Server</h2>
+                    <p>The simplest Actix server looks like this:</p>
+
+                    <p>
+                        In <span class="inline-code">Cargo.toml</span>, add
+                        Actix:
+                    </p>
+
+                    <div class="code-block" data-lang="toml">
+                        <pre>
+[dependencies]
+actix-web = "4"</pre
+                        >
+                    </div>
+
+                    <div class="code-block" data-lang="rust">
+                        <pre>
+use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+
+async fn index() -> impl Responder {
+    HttpResponse::Ok().body("Hello, Actix!")
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result&lt;()> {
+    println!("Server running at http://127.0.0.1:8080");
+
+    HttpServer::new(|| {
+        App::new()
+            .route("/", web::get().to(index))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</pre
+                        >
+                    </div>
+
+                    <!-- Hello World openssl-->
+
+                    <h2>Hello World Server: Openssl</h2>
+                    <p>The simplest Actix server looks like this:</p>
+
+                    <p>
+                        In <span class="inline-code">Cargo.toml</span>, add
+                        openssl:
+                    </p>
+
+                    <div class="code-block" data-lang="toml">
+                        <pre>
+[dependencies]
+actix-web = "4"
+openssl = "0.10.68"</pre
+                        >
+                    </div>
+
+                    <div class="code-block" data-lang="rust">
+                        <pre>
+use actix_web::{get, App, HttpResponse, HttpServer, Responder};
+use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
+
+async fn index() -> impl Responder {
+    HttpResponse::Ok().body("Hello, Actix!")
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result&lt;()> {
+    println!("Server running at http://127.0.0.1:8080");
+
+    HttpServer::new(|| {
+        App::new()
+            .route("/", web::get().to(index))
+    })
+    .bind_openssl("0.0.0.0:443", builder)?
+    .run()
+    .await
+}</pre
+                        >
+                    </div>
+
+                    <!-- JSON API Endpoint -->
+                    <h2>JSON API Endpoint</h2>
+                    <p>
+                        For a REST API, we need JSON support. Let's add
+                        <span class="inline-code">serde</span>:
+                    </p>
+
+                    <div class="code-block" data-lang="toml">
+                        <pre>
+[dependencies]
+actix-web = "4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"</pre
+                        >
+                    </div>
+
+                    <p>Now we can receive and send JSON data:</p>
+
+                    <div class="code-block" data-lang="rust">
+                        <pre>
+use actix_web::{post, web, App, HttpResponse, HttpServer, Responder};
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize)]
+struct User {
+    name: String,
+    age: u32,
+}
+
+#[post("/user")]
+async fn create_user(user: web::Json&lt;User>) -> impl Responder {
+    HttpResponse::Ok().json(User {
+        name: format!("Created: {}", user.name),
+        age: user.age,
+    })
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result&lt;()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(create_user)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</pre
+                        >
+                    </div>
+                    <!-- State Management -->
+                    <h2>State Management</h2>
+                    <p>
+                        For shared state, we use
+                        <span class="inline-code">web::Data</span>:
+                    </p>
+
+                    <div class="code-block" data-lang="rust">
+                        <pre>
+use actix_web::{get, web, App, HttpResponse, HttpServer};
+use std::sync::Mutex;
+
+struct AppState {
+    counter: Mutex&lt;i32>,
+}
+
+#[get("/count")]
+async fn count(data: web::Data&lt;AppState>) -> HttpResponse {
+    let mut counter = data.counter.lock().unwrap();
+    *counter += 1;
+    HttpResponse::Ok().body(format!("Count: {}", counter))
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result&lt;()> {
+    let app_state = web::Data::new(AppState {
+        counter: Mutex::new(0),
+    });
+
+    HttpServer::new(move || {
+        App::new()
+            .app_data(app_state.clone())
+            .service(count)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</pre
+                        >
+                    </div>
+
+                    <!-- info box -->
+                    <div class="info-box">
+                        <p>
+                            <strong>Tip:</strong> Actix uses multiple worker
+                            threads. That's why we need
+                            <span class="inline-code">Mutex</span> for shared
+                            mutable state. For read-heavy workloads,
+                            <span class="inline-code">RwLock</span> is more
+                            performant.
+                        </p>
+                    </div>
+
+                    <!-- Middleware Example -->
+                    <h2>Middleware Example: Compression</h2>
+                    <p>
+                        One of the most useful middleware components is
+                        automatic response compression. Why send 10KB when you
+                        can send 2KB? Your users' data plans will thank you:
+                    </p>
+
+                    <div class="code-block" data-lang="rust">
+                        <pre>
+use actix_web::{middleware, App, HttpServer, HttpResponse};
+
+#[actix_web::main]
+async fn main() -> std::io::Result&lt;()> {
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Compress::default())
+            .service(index)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</pre
+                        >
+                    </div>
+
+                    <p>
+                        The <span class="inline-code">Compress</span> middleware
+                        automatically compresses responses using gzip, deflate,
+                        or brotli based on the client's
+                        <span class="inline-code">Accept-Encoding</span> header.
+                        It's transparent, efficient, and makes your API
+                        responses fly over the wire.
+                    </p>
+
+                    <!-- guard -->
+                    <h2>Actix Guard</h2>
+                    <p>The simplest Actix guard looks like this:</p>
+
+                    <div class="code-block" data-lang="rust">
+                        <pre>
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            //http://localhost
+            .service(web::resource("/")
+                .guard(guard::Host("localhost"))
+                .route(web::get().to(hello_from_localhost)),
+            )
+            //http://test.com
+            .service(web::resource("/")
+                .guard(guard::Host("test.com"))
+                .route(web::get().to(hello_from_test)),
+            )
+            //http://127.0.0.1
+            .route("/", web::get().to(hello))
+            .route("/hey", web::get().to(hey))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
+}</pre
+                        >
+                    </div>
+
+                    <!-- end guard -->
+
+                    <h2>Performance Tips</h2>
+                    <ul>
+                        <li>
+                            Use <span class="inline-code">.workers()</span> to
+                            control the number of worker threads
+                        </li>
+                        <li>
+                            For CPU-intensive tasks: use
+                            <span class="inline-code">web::block()</span> for
+                            blocking code
+                        </li>
+                        <li>
+                            For maximum performance: compile with
+                            <span class="inline-code">--release</span>
+                        </li>
+                        <li>Connection pooling for databases is mandatory</li>
+                    </ul>
+
+                    <h2>Conclusion</h2>
+                    <p>
+                        Actix-web is an extremely fast and robust framework. The
+                        learning curve is a bit steep at first, but once you
+                        understand the concepts, everything flows smoothly. For
+                        production web services in Rust, Actix is my first
+                        choice.
+                    </p>
+
+                    <p>
+                        The complete code is of course production-ready and runs
+                        stable under load. Happy coding! 🦀
+                    </p>
+                </div>
+            </article>
+
+            <a href="blog.html" class="back-link">Back to Blog</a>
+        </div>
+    </body>
+</html>

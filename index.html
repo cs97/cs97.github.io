@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>chrswr</title>
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M2.5 17.5L7.5 7.5L12 1.5L16.5 7.5L21.5 17.5H2.5Z' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M9 13L10.5 11L13 13H9Z' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/><path d='M5 18C7.5 19 16.5 19 19 18' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>"
+            type="image/svg+xml"
+        />
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "Poppins", sans-serif;
+            }
+
+            body {
+                background: url("berg.avif") no-repeat;
+                background-size: cover;
+                background-position: center;
+                background-attachment: fixed;
+                color: #ededed;
+                min-height: 100vh;
+            }
+
+            body::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(8, 27, 41, 0.75);
+                z-index: -1;
+            }
+
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 20px 10%;
+                background: rgba(8, 27, 41, 0.95);
+                backdrop-filter: blur(10px);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                z-index: 100;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+
+            .logo {
+                font-size: 25px;
+                color: #ededed;
+                text-decoration: none;
+                font-weight: 600;
+                transition: 0.3s;
+            }
+
+            .logo:hover {
+                color: #00abf0;
+            }
+
+            .navbar a {
+                font-size: 18px;
+                color: #ededed;
+                text-decoration: none;
+                font-weight: 500;
+                margin-left: 35px;
+                transition: 0.3s;
+            }
+
+            .navbar a:hover,
+            .navbar a.active {
+                color: #00abf0;
+            }
+
+            .home {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                padding: 0 10%;
+                padding-top: 80px;
+            }
+
+            .home-content {
+                max-width: 600px;
+            }
+
+            .home-content h1 {
+                font-size: 56px;
+                font-weight: 700;
+                line-height: 1.2;
+                margin-bottom: 10px;
+                background: linear-gradient(90deg, #ededed, #00abf0);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .home-content h3 {
+                font-size: 32px;
+                font-weight: 700;
+                color: #00abf0;
+                margin-bottom: 20px;
+            }
+
+            .home-content p {
+                font-size: 16px;
+                line-height: 1.8;
+                margin-bottom: 30px;
+                color: #b0b0b0;
+            }
+
+            .home-content .btn-box {
+                display: flex;
+                gap: 20px;
+            }
+
+            .btn-box a {
+                position: relative;
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                width: 50px;
+                height: 50px;
+                background: rgba(0, 171, 240, 0.1);
+                border: 2px solid #00abf0;
+                border-radius: 12px;
+                color: #00abf0;
+                text-decoration: none;
+                font-weight: 600;
+                z-index: 1;
+                overflow: hidden;
+                transition: all 0.4s ease;
+            }
+
+            .btn-box a:hover {
+                background: #00abf0;
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px rgba(0, 171, 240, 0.4);
+            }
+
+            .btn-box a:hover svg path {
+                fill: #081b29;
+            }
+
+            .btn-box a svg {
+                transition: 0.3s;
+            }
+
+            .btn-box a svg path {
+                fill: #00abf0;
+                transition: 0.3s;
+            }
+
+            @media (max-width: 768px) {
+                .home-content {
+                    padding: 30px;
+                }
+
+                .home-content h1 {
+                    font-size: 36px;
+                }
+
+                .home-content h3 {
+                    font-size: 24px;
+                }
+
+                .navbar a {
+                    margin-left: 20px;
+                    font-size: 16px;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .header {
+                    padding: 20px 5%;
+                }
+
+                .home {
+                    padding: 0 5%;
+                }
+
+                .navbar a {
+                    margin-left: 15px;
+                    font-size: 14px;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <header class="header">
+            <a href="https://chrswr.de/" class="logo">chrswr</a>
+
+            <nav class="navbar">
+                <a href="https://chrswr.de/" class="active">Home</a>
+                <a href="https://chrswr.de/blog.html">Blog</a>
+                <!-- <a href="#">Services</a> -->
+                <a href="QuackQuack3.webm">Quack</a>
+                <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+                    >Contact</a
+                >
+            </nav>
+        </header>
+
+        <!-- Hello there -->
+
+        <section class="home">
+            <div class="home-content">
+                <h1>Hi, i am Christian</h1>
+                <h3>I'm just doing stuff</h3>
+                <p>
+                    -I like to programm in Rust and Bash.<br />
+                    -My preferred operating systems are Gentoo, Fedora, Alpine
+                    and OpenBSD.<br />
+                    -KISS principle. <br />
+                    -Sometimes I do other stuff like stock trading.<br />
+                    -Feel free to contact me. <br />
+                </p>
+                <div class="btn-box">
+                    <a
+                        href="https://github.com/cs97"
+                        target="_blank"
+                        aria-label="GitHub"
+                    >
+                        <svg
+                            width="30"
+                            height="30"
+                            viewBox="0 0 30 30"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M19.7998 28.2998C19.3998 28.2998 18.9998 27.9998 18.9998 27.4998V20.1998C18.9998 18.9998 18.9998 18.4998 18.4998 17.9998C18.2998 17.7998 18.1998 17.4998 18.2998 17.1998C18.3998 16.8998 18.5998 16.6998 18.8998 16.6998C22.4998 16.2998 24.6998 15.0998 24.6998 9.99982C24.6998 8.69982 24.1998 7.39982 23.2998 6.49982C23.0998 6.29982 22.9998 5.99982 23.0998 5.69982C23.2998 5.09982 23.3998 4.59982 23.3998 3.99982C23.3998 3.59982 23.2998 3.09982 23.1998 2.69982C22.6998 2.79982 21.5998 2.99982 19.7998 4.19982C19.5998 4.29982 19.3998 4.29982 19.1998 4.29982C16.7998 3.69982 14.1998 3.69982 11.7998 4.29982C11.5998 4.39982 11.3998 4.29982 11.1998 4.19982C9.3998 3.09982 8.2998 2.79982 7.7998 2.79982C7.6998 3.19982 7.5998 3.59982 7.5998 4.09982C7.5998 4.69982 7.6998 5.29982 7.8998 5.79982C7.9998 6.09982 7.8998 6.39982 7.6998 6.59982C7.1998 7.09982 6.8998 7.59982 6.5998 8.19982C6.3998 8.79982 6.1998 9.39982 6.1998 10.0998C6.1998 15.0998 8.3998 16.3998 11.9998 16.7998C12.2998 16.7998 12.4998 16.9998 12.5998 17.2998C12.6998 17.5998 12.5998 17.8998 12.3998 18.0998C11.9998 18.4998 11.7998 19.2998 11.8998 20.4998V22.4998V22.5998V27.5998C11.8998 27.9998 11.5998 28.3998 11.0998 28.3998C10.5998 28.3998 10.2998 28.0998 10.2998 27.5998V23.5998C6.9998 24.1998 5.6998 22.1998 4.8998 20.7998C4.4998 20.0998 4.0998 19.4998 3.6998 19.3998C3.2998 19.2998 3.0998 18.8998 3.1998 18.4998C3.2998 18.0998 3.6998 17.8998 4.0998 17.9998C5.0998 18.2998 5.6998 19.1998 6.1998 20.0998C7.0998 21.4998 7.7998 22.7998 10.3998 22.1998V20.7998C10.2998 19.7998 10.3998 18.9998 10.5998 18.3998C7.4998 17.7998 4.5998 16.1998 4.5998 10.3998C4.5998 9.49982 4.7998 8.69982 5.0998 7.89982C5.4998 6.99982 5.8998 6.39982 6.2998 5.89982C6.1998 5.29982 6.0998 4.69982 6.0998 3.99982C6.0998 3.19982 6.2998 2.39982 6.5998 1.69982C6.6998 1.49982 6.8998 1.29982 7.0998 1.29982C7.3998 1.19982 8.7998 0.999818 11.7998 2.79982C14.2998 2.19982 16.8998 2.19982 19.2998 2.79982C22.2998 0.999818 23.6998 1.19982 23.9998 1.29982C24.1998 1.39982 24.3998 1.49982 24.4998 1.69982C24.7998 2.39982 24.9998 3.19982 24.9998 3.99982C24.9998 4.59982 24.8998 5.29982 24.7998 5.89982C25.7998 7.09982 26.3998 8.49982 26.3998 10.0998C26.3998 15.8998 23.5998 17.5998 20.4998 18.0998C20.6998 18.7998 20.6998 19.4998 20.6998 20.1998V27.4998C20.5998 27.9998 20.1998 28.2998 19.7998 28.2998Z"
+                            ></path>
+                        </svg>
+                    </a>
+                    <a
+                        target="_blank"
+                        href="https://instagram.com/cs10297/"
+                        aria-label="Instagram"
+                    >
+                        <svg
+                            width="30"
+                            height="30"
+                            viewBox="0 0 30 30"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M0.25 9C0.25 4.16751 4.16751 0.25 9 0.25H21C25.8325 0.25 29.75 4.16751 29.75 9V21C29.75 25.8325 25.8325 29.75 21 29.75H9C4.16751 29.75 0.25 25.8325 0.25 21V9ZM9 1.75C4.99594 1.75 1.75 4.99594 1.75 9V21C1.75 25.0041 4.99594 28.25 9 28.25H21C25.0041 28.25 28.25 25.0041 28.25 21V9C28.25 4.99594 25.0041 1.75 21 1.75H9ZM24 7.75H22V6.25H24V7.75ZM8.25 15C8.25 11.2721 11.2721 8.25 15 8.25C18.7279 8.25 21.75 11.2721 21.75 15C21.75 18.7279 18.7279 21.75 15 21.75C11.2721 21.75 8.25 18.7279 8.25 15ZM15 9.75C12.1005 9.75 9.75 12.1005 9.75 15C9.75 17.8995 12.1005 20.25 15 20.25C17.8995 20.25 20.25 17.8995 20.25 15C20.25 12.1005 17.8995 9.75 15 9.75Z"
+                            ></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- a boar runs happily across the field -->
+    </body>
+</html>
